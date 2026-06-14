@@ -1,11 +1,11 @@
 import firebase_admin
 from firebase_admin import credentials, firestore
+import json
+import os
 
-# ── CONNECT TO FIREBASE ──
-# Make sure serviceAccountKey.json is in the same folder
-# Download it from: Firebase Console → Project Settings → Service Accounts → Generate New Private Key
 if not firebase_admin._apps:
-    cred = credentials.Certificate("serviceAccountKey.json")
+    cred_json = json.loads(os.environ.get("serviceAccountKey.json"))
+    cred = credentials.Certificate(cred_json)
     firebase_admin.initialize_app(cred)
 
 db = firestore.client()
