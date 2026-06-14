@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sahaj — Find Your Scheme</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <div class="nav-brand">Sahaj</div>
+
+    <div class="nav-right">
+      <div class="lang-bar">
+        <button class="lang-btn" onclick="setLang('hi')">हिंदी</button>
+        <button class="lang-btn active" onclick="setLang('en')">English</button>
+        <button class="lang-btn" onclick="setLang('mr')">मराठी</button>
+        <button class="lang-btn" onclick="setLang('ta')">தமிழ்</button>
+        <button class="lang-btn" onclick="setLang('te')">తెలుగు</button>
+        <button class="lang-btn" onclick="setLang('bn')">বাংলা</button>
+      </div>
+
+      <div class="auth-section">
+        <div id="login-btn">
+          <button class="btn-google" onclick="googleLogin()">🔵 Login</button>
+        </div>
+
+        <div id="user-info" class="user-info-container" style="display:none">
+          <span id="user-name" class="user-badge"></span>
+          <button class="btn-logout" onclick="googleLogout()">Logout</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="screen active" id="screen-welcome">
+    <div class="welcome-hero">
+      <div class="hero-content">
+        <h1 class="hero-title" id="hero-title" data-key="hero_title">Find Your Govt Scheme</h1>
+        <p class="hero-desc" data-key="hero_desc">Answer minimal quick questions to discover government benefits you
+          qualify for.</p>
+
+        <div class="hero-buttons">
+          <button class="btn-primary btn-large" onclick="openModal()" data-key="start_btn">Get Started</button>
+          <button class="btn-outline btn-large" onclick="scrollToGuide()" data-key="guide_btn">Guide</button>
+        </div>
+      </div>
+
+      <div class="bg-scheme scheme-1">PM Kisan</div>
+      <div class="bg-scheme scheme-2">Ayushman Bharat</div>
+      <div class="bg-scheme scheme-3">PM Awas</div>
+      <div class="bg-scheme scheme-4">Mudra Yojana</div>
+      <div class="bg-scheme scheme-5">Jan Dhan</div>
+
+      <div class="stats-footer">
+        <div class="stat-item">
+          <span class="stat-number">4,630+</span> <span data-key="schemes_found">Verified Schemes</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">₹0</span> <span data-key="stat_cost">No Cost</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">2</span> <span data-key="stat_time">Mins to Discover</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="guide-section" id="guide-section">
+      <h2 class="guide-title" data-key="how_it_works">How does it work?</h2>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <div class="guide-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+          <h3 data-key="step1_title">Answer the quiz</h3>
+          <p data-key="step1_desc">Just 5 simple questions about yourself.</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </div>
+          <h3 data-key="step2_title">We find schemes</h3>
+          <p data-key="step2_desc">Our engine matches you with eligible benefits.</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </div>
+          <h3 data-key="step3_title">See & Apply</h3>
+          <p data-key="step3_desc">View your eligible schemes and apply directly.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="quiz-modal">
+    <div class="modal-content">
+      <button type="button" class="close-btn" title="Close modal" onclick="closeModal()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="quiz-container">
+        <div class="quiz-top">
+          <button class="btn-text" id="back-btn" onclick="goBack()" data-key="back">← Back</button>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+        </div>
+
+        <div class="quiz-area">
+          <div class="question active" id="q1">
+            <h2 class="q-title" data-key="q_gender_title">What is your gender?</h2>
+            <div class="options-grid">
+              <button class="opt" onclick="pick(this,'gender','male')" data-key="gender_m">Male</button>
+              <button class="opt" onclick="pick(this,'gender','female')" data-key="gender_f">Female</button>
+              <button class="opt" onclick="pick(this,'gender','other')" data-key="gender_o">Other</button>
+            </div>
+            <div class="error-msg" id="err1" data-key="error">Please select an option.</div>
+            <button class="btn-primary" onclick="nextQ(1,2)" data-key="next">Next</button>
+          </div>
+
+          <div class="question" id="q2">
+            <h2 class="q-title" data-key="q1_title">What is your age?</h2>
+            <div class="options-grid">
+              <button class="opt" onclick="pick(this,'age','below18')" data-key="a1_1">Under 18</button>
+              <button class="opt" onclick="pick(this,'age','18-40')" data-key="a1_2">18 - 40</button>
+              <button class="opt" onclick="pick(this,'age','40-60')" data-key="a1_3">40 - 60</button>
+              <button class="opt" onclick="pick(this,'age','60+')" data-key="a1_4">60+</button>
+            </div>
+            <div class="error-msg" id="err2" data-key="error">Please select an option.</div>
+            <button class="btn-primary" onclick="nextQ(2,3)" data-key="next">Next</button>
+          </div>
+
+          <div class="question" id="q3">
+            <h2 class="q-title" data-key="q2_title">Household Annual Income?</h2>
+            <div class="options-grid">
+              <button class="opt" onclick="pick(this,'income','below1L')" data-key="a2_1">Under ₹1L</button>
+              <button class="opt" onclick="pick(this,'income','1-3L')" data-key="a2_2">₹1L - ₹3L</button>
+              <button class="opt" onclick="pick(this,'income','3-8L')" data-key="a2_3">₹3L - ₹8L</button>
+              <button class="opt" onclick="pick(this,'income','above8L')" data-key="a2_4">Above ₹8L</button>
+            </div>
+            <div class="error-msg" id="err3" data-key="error">Please select an option.</div>
+            <button class="btn-primary" onclick="nextQ(3,4)" data-key="next">Next</button>
+          </div>
+
+          <div class="question" id="q4">
+            <h2 class="q-title" data-key="q3_title">Where do you live?</h2>
+            <div class="options-grid">
+              <button class="opt" onclick="pick(this,'location','rural')" data-key="a3_1">Rural</button>
+              <button class="opt" onclick="pick(this,'location','semi')" data-key="a3_2">Semi-Urban</button>
+              <button class="opt" onclick="pick(this,'location','urban')" data-key="a3_3">Urban</button>
+            </div>
+            <div class="error-msg" id="err4" data-key="error">Please select an option.</div>
+            <button class="btn-primary" onclick="nextQ(4,5)" data-key="next">Next</button>
+          </div>
+
+          <div class="question" id="q5">
+            <h2 class="q-title" data-key="q4_title">What is your occupation?</h2>
+            <div class="options-grid">
+              <button class="opt" onclick="pick(this,'occupation','farmer')" data-key="a4_1">Farmer</button>
+              <button class="opt" onclick="pick(this,'occupation','student')" data-key="a4_2">Student</button>
+              <button class="opt" onclick="pick(this,'occupation','labor')" data-key="a4_3">Laborer</button>
+              <button class="opt" onclick="pick(this,'occupation','business')" data-key="a4_4">Business</button>
+              <button class="opt" onclick="pick(this,'occupation','govt')" data-key="a4_5">Employee</button>
+            </div>
+            <div class="error-msg" id="err5" data-key="error">Please select an option.</div>
+            <button class="btn-primary" onclick="startSearch()" data-key="show_results">Find Schemes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="scheme-modal">
+    <div class="modal-content">
+      <button type="button" class="close-btn" title="Close modal" onclick="closeSchemeModal()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <div id="scheme-modal-body"></div>
+    </div>
+  </div>
+
+  <div class="screen" id="screen-loading">
+    <div class="loading-wrap">
+      <div class="svg-scanner">
+        <svg class="scanner-doc" width="80" height="100" viewBox="0 0 24 24" fill="none" stroke="var(--blue)"
+          stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        <svg class="scanner-mag" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="var(--saffron)"
+          stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </div>
+      <h2 class="loading-text" data-key="loading">Searching verified schemes...</h2>
+    </div>
+  </div>
+
+  <div class="screen" id="screen-results">
+    <div class="results-container">
+
+      <div class="results-top">
+        <div>
+          <h2 data-key="results_title">Your Eligible Schemes</h2>
+          <label for="state-filter">state</label>
+            <select id="state-filter" class="state-select" onchange="filterState(this.value)"></select>
+        </div>
+        <button class="btn-outline" onclick="restart()" data-key="restart">Start Over</button>
+      </div>
+
+      <div class="category-bar" id="category-bar"></div>
+      <div class="schemes-grid" id="schemes-grid"></div>
+
+      <div class="kendra-section">
+        <div class="kendra-header">
+          <div class="kendra-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--saffron)" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+          </div>
+          <h3 data-key="kendra_title">Find Nearest Sarkari Kendra</h3>
+        </div>
+        <p class="kendra-desc" data-key="kendra_desc">Get help applying for these schemes offline.</p>
+
+        <div class="kendra-search-box">
+          <input type="text" id="pin-input" class="kendra-input" placeholder="Enter 6-digit PIN" maxlength="6">
+          <button class="btn-primary kendra-btn" onclick="searchKendra()" data-key="search_btn">Search</button>
+        </div>
+        <div id="kendra-results" class="kendra-results"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    // 1. YOUR FIREBASE CONFIG (Make sure your real keys are inside the quotes!)
+    const firebaseConfig = {
+      apiKey: "AIzaSyD2WaTlZ6GtyZ863j03I7192OF809stKDI",
+      authDomain: "sahaj-91d5e.firebaseapp.com",
+      projectId: "sahaj-91d5e"
+    };
+
+    // 2. INITIALIZE FIREBASE
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const provider = new GoogleAuthProvider();
+
+    // 3. LOGIN FUNCTION (Attached to window so HTML can see it)
+    window.googleLogin = function () {
+      signInWithPopup(auth, provider)
+        .then(result => {
+          const user = result.user;
+          document.getElementById('user-name').textContent = "Hi, " + user.displayName.split(" ")[0];
+          document.getElementById('login-btn').style.display = 'none';
+          document.getElementById('user-info').style.display = 'flex'; // Changed to flex for the new layout
+          window.currentUser = user;
+        })
+        .catch(err => {
+          console.error("Login Error: ", err);
+          alert("Login failed. Check console for details.");
+        });
+    };
+
+    // 4. LOGOUT FUNCTION
+    window.googleLogout = function () {
+      signOut(auth).then(() => {
+        document.getElementById('login-btn').style.display = 'block';
+        document.getElementById('user-info').style.display = 'none';
+        window.currentUser = null;
+      }).catch((error) => {
+        console.error("Sign Out Error", error);
+      });
+    };
+
+    // 5. SAVE HISTORY FUNCTION
+    window.saveHistory = async function (schemes) {
+      if (!window.currentUser || !window.userAnswers) return;
+      try {
+        await addDoc(collection(db, "history"), {
+          userId: window.currentUser.uid,
+          userName: window.currentUser.displayName,
+          answers: window.userAnswers,
+          schemes: schemes.map(s => s.name),
+          timestamp: new Date()
+        });
+        console.log("Search history saved to Firebase!");
+      } catch (err) {
+        console.error("Error saving history: ", err);
+      }
+    };
+  </script>
+
+  <script src="scripts.js"></script>
+</body>
+
+</html>
